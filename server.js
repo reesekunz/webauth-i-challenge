@@ -1,13 +1,15 @@
 const express = require("express");
 
-// const projectsRouter = require("../projects/projectsRouter");
-// const resourcesRouter = require("../resources/resourcesRouter");
+const usersRouter = require("./users/usersRouter");
+const registerRouter = require("./register/registerRouter");
+const loginRouter = require("./login/loginRouter");
 
 const server = express();
 
 server.use(express.json());
 
-// server.use("/api/projects", projectsRouter);
-// server.use("/api/resoureces", resourecesRouter);
+server.use("/api/users", usersRouter);
+server.use("/api/register", registerRouter);
+server.use("/api/login", loginRouter);
 
 module.exports = server;
