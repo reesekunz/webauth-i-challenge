@@ -1,18 +1,26 @@
 const express = require("express");
 
 const Users = require("../helpers/usersModel");
-// const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const db = require("../data/db-config");
 
 const router = express.Router();
 
-router.get("/", (request, response) => {
-  Users.getProjects()
-    .then(projects => {
-      response.json(projects);
+// POST to /api/login
+router.post("/", (request, response) => {
+  let { username, password } = request.body;
+
+  Users.findBy({ username })
+    .first()
+    .then(user => {
+      if (user && bcrypt.compareSync(password, user.password)) {
+        response.status(200).json({ message: `Welcome ${user.username}!` });
+      } else {
+        response.status(401).json({ message: "You shall not pass!" });
+      }
     })
     .catch(error => {
-      response.status(500).json({ message: "Failed to get projects" });
+      res.status(500).json(error);
     });
 });
 
