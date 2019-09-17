@@ -20,4 +20,20 @@ server.use("/api/users", usersRouter);
 server.use("/api/register", registerRouter);
 server.use("/api/login", loginRouter);
 
+// GET to /api/logout
+server.get("/api/logout", (request, response) => {
+  if (request.session) {
+    request.session.destroy(error => {
+      if (error) {
+        response.status(500).json({
+          message: "you can check out anytime you like but you can never leave"
+        });
+      }
+      response.status(200).json({ message: "bye" });
+    });
+  } else {
+    response.status(200).json({ message: "already logged out" });
+  }
+});
+
 module.exports = server;

@@ -1,6 +1,7 @@
 const session = require("express-session");
 // (npm i connect-session-knex) => have to require the Store after the session - remember to pass session using currying
 const KnexSessionStore = require("connect-session-knex")(session);
+const db = require("./data/db-config");
 
 const sessionConfig = {
   // cookie name being sent to the browser, it would name the cookie sid by default if no name
@@ -24,7 +25,7 @@ const sessionConfig = {
     // specific config for this library - db is the import from dbConfig
     knex: db,
     // creates table if no table to store session - would provide table name and sid field name by default
-    tablename: "knex sessions",
+    tablename: "knexsessions",
     sidfieldname: "sessionid",
     createtable: true,
     // clean out expired session data
